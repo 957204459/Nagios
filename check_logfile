@@ -13,8 +13,6 @@ GREP="/bin/egrep"
 DIFF="/bin/diff"
 TAIL="/bin/tail"
 CAT="/bin/cat"
-RM="/bin/rm"
-CHMOD="/bin/chmod"
 TOUCH="/bin/touch"
 
 PROGNAME=`/bin/basename $0`
@@ -34,7 +32,7 @@ print_help() {
     echo ""
     print_usage
     echo ""
-    echo "Log file pattern detector plugin for Nagios"
+    echo "Logfile pattern detector plugin for Nagios"
     echo ""
     support
 }
@@ -125,6 +123,7 @@ line_number_end=$(wc -l $logfile | cut -d' ' -f1)
 output=$(sed -n $line_number_begin',$p' $logfile)
 # Count the number of matching log entries we have
 count=$(echo $output| $GREP -c "$query")
+
 echo ${line_number_end} > ${postion_file}
 
 # Debug 
@@ -137,10 +136,10 @@ echo ${line_number_end} > ${postion_file}
 # Get the last matching entry in the diff file
 
 if [ "$count" = "0" ]; then # no matches, exit with no error
-    echo "Log check ok - 0 pattern matches found"
+    echo "Logfile check ok - 0 pattern matches found"
     exitstatus=$STATE_OK
 else # Print total matche count and the last entry we found
-    echo "Log check - $count pattern matches found - $query"
+    echo "Logfile check - $count pattern matches found - $query"
     exitstatus=$STATE_CRITICAL
 fi
 
